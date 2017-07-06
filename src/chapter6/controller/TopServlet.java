@@ -13,7 +13,7 @@ import chapter6.beans.User;
 import chapter6.beans.UserMessage;
 import chapter6.service.MessageService;
 
-@WebServlet(urlPatterns = { "/index.jsp" })
+@WebServlet(urlPatterns = {"/index.jsp "})
 public class TopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

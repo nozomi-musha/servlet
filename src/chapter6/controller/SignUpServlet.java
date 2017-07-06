@@ -16,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import chapter6.beans.User;
 import chapter6.service.UserService;
 
-@WebServlet(urlPatterns = { "/signup" })
+@WebServlet(urlPatterns = { "/signup.jsp" })
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +36,8 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (isValid(request, messages) == true) {
 
+			//request.getParameter("name");
+
 			User user = new User();
 			user.setName(request.getParameter("name"));
 			user.setAccount(request.getParameter("account"));
@@ -47,8 +49,16 @@ public class SignUpServlet extends HttpServlet {
 
 			response.sendRedirect("./");
 		} else {
+			String s = request.getParameter("name");
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("signup");
+//			response.sendRedirect("signup");
+			request.setAttribute("name", s);
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
+
+
+
+
+
 		}
 	}
 
@@ -58,9 +68,12 @@ public class SignUpServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(account) == true) {
 			messages.add("アカウント名を入力してください");
+
 		}
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
+
+
 		}
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
 		if (messages.size() == 0) {
